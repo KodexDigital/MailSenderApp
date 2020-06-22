@@ -9,12 +9,14 @@ using MailSenderApp.Models;
 using MailSenderApp.ViewModels;
 using System.Net.Mail;
 using System.Net;
+using System.IO;
 
 namespace MailSenderApp.Controllers
 {
 	public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> _logger;
+		private readonly string fileUpload;
 
 		public HomeController(ILogger<HomeController> logger)
 		{
@@ -28,7 +30,8 @@ namespace MailSenderApp.Controllers
 		[HttpPost]
 		public IActionResult SendMail(MailSenderViewModel model)
 		{
-			if(ModelState.IsValid)
+			//string fileName = Path.GetFileName(model.Attachments.FileName);
+			if (ModelState.IsValid)
 			{
 				MailMessage msg = new MailMessage
 				{
@@ -37,6 +40,12 @@ namespace MailSenderApp.Controllers
 				msg.To.Add(model.RecipientEmail);
 				msg.Subject = model.Title;
 				msg.Body = model.Body;
+				//msg.CC.Add(model.CC);
+				if (model.Attachments.Length > 0)
+				{
+					string fileName = Path.GetFileName(model.Attachments.FileName);
+					msg.Attachments.Add(new Attachment(model.Attachments.OpenReadStream(), fileName));
+				}
 
 				SmtpClient client = new SmtpClient
 				{

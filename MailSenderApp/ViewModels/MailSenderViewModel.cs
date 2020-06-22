@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -13,6 +14,11 @@ namespace MailSenderApp.ViewModels
 		[Display(Name = "To")]
 		public string RecipientEmail { get; set; }
 		public string Body { get; set; }
-		public string Attachments { get; set; }
+
+		//[Display(Name = "cc")]
+		//public string CC { get; set; }
+
+		[Display(Name ="Upload file(s)")]
+		public IFormFile Attachments { get; set; }
 	}
 }
