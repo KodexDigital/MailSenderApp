@@ -1,0 +1,30 @@
+﻿@model MailSenderApp.ViewModels.MailSenderViewModel
+
+
+@{
+	ViewData["Title"] = "mail sender";
+}
+
+<h1>Mailer</h1>
+
+<div>
+	<h3>@ViewBag.Success</h3>
+	<form asp-controller="Home" asp-action="SendMail" method="post">
+		<div class="form-group">
+			<input asp-for="RecipientEmail" class="form-control" placeholder="@Html.DisplayNameFor(model =>model.RecipientEmail)" />
+		</div>
+		<div class="form-group">
+			<input asp-for="Title" class="form-control" placeholder="@Html.DisplayNameFor(model =>model.Title)" />
+		</div>
+		<div class="form-group">
+			<textarea asp-for="Body" class="form-control" rows="15" placeholder="@Html.DisplayNameFor(model =>model.Body)"></textarea>
+		</div>
+		<div class="form-group">
+			<input type="submit" value="Send mail" class="form-control btn btn-primary" />
+		</div>
+	</form>
+</div>
+
+
+
+
